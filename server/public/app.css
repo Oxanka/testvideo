@@ -1,0 +1,229 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  /*border-bottom: 0.1em solid black;*/
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+  text-align: right;
+}
+
+.menu:before {
+  /*content: "[";*/
+}
+
+.menu:after {
+  /*content: "]";*/
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li + li:before {
+  /*content: "|";*/
+  padding-right: 0.3em;
+}
+ul.list_home li:hover {
+  color: #4169E1;
+  cursor: pointer;
+}
+
+tr td.open:hover {
+  color: #4169E1;
+  cursor: pointer;
+}
+
+/*hr.edit_job {*/
+/*color: #000000; !* Цвет линии для IE6-7 *!*/
+/*height: 2px; !* Толщина линии *!*/
+/*}*/
+.font_weight_bold {
+  font-weight: bold
+}
+.center_text {
+  text-align: center;
+}
+.icon_home {
+  height: 100px;
+  margin-left: 30px;
+}
+.border_text {
+  border: 1px solid;
+}
+.text_margin_top {
+    margin-top: 40px;
+}
+.text_margin_bottom {
+    margin-bottom: 20px;
+}
+.button_login{
+  border: 2px solid #000;
+  text-align: center;
+  width: 100px;
+  margin-left: 20px;
+}
+.login_button{
+  text-align: right;
+  margin-top: 20px;
+  margin-right: 15%;
+}
+.input_login{
+  width: 800px;
+  /*width: 80%;*/
+}
+.width_100 {
+  width: 100%;
+}
+.line_height{
+  line-height: 25px;
+}
+.text_login {
+  text-align: left;
+  /*margin-left: 10%;*/
+  font-weight: bold;
+}
+.home_menu{
+  float: left;
+  width: 2%;
+  height: 100px;"
+}
+.list_home{
+  list-style-type: none;
+}
+
+.registration_form{
+  padding-left: 30px;
+}
+.registration_blocks{
+  padding-top: 30px;
+  margin-right: 90px;
+}
+.registration_blocks hr {
+  margin-top: 0px;
+}
+.text_registration{
+  color: coral;
+}
+.title_registration{
+  color: #4169E1;
+  /*margin-right: 90px;*/
+}
+.input_registration{
+  margin-left: 15px;
+  border-radius: 5px;
+  /*margin-top: 20px;*/
+  color: #000000;
+  border: 1px solid cornflowerblue;
+  /*border-color: cornflowerblue;*/
+}
+.description_job{
+  resize: none;
+}
+.error_msg{
+  text-align: center;
+  color: red;
+}
+
+.comments {
+  font-size: 10px;
+  /*margin-left: 20%;*/
+}
+.registration_blocks .title_registration .second-elem{
+  padding-left: 0px;
+}
+.registration_blocks .title_registration .first-elem{
+  text-align: right;
+}
+
+.valid_error {
+  color: #ac2925;
+}
+
+.not_border{
+  border: 0px;
+  background-color: #FFFFFF;
+}
+.b-container{
+  width:200px;
+  height:150px;
+  background-color: #ccc;
+  margin:0px auto;
+  padding:10px;
+  font-size:30px;
+  color: #fff;
+}
+.b-popup{
+  width:100%;
+  min-height:100%;
+  background-color: rgba(0,0,0,0.5);
+  overflow:hidden;
+  position:fixed;
+  top:0px;
+}
+.b-popup .b-popup-content{
+  margin:40px auto 0px auto;
+  width: 70%;
+  height: 20%;
+  padding:10px;
+  background-color: #e2e2e2;
+  border-radius:5px;
+  box-shadow: 0px 0px 10px #000;
+}
+.error{
+  color: red;
+}
+.right{
+  text-align: right;
+}
+.underline{
+  text-decoration: underline;
+}
+.justify{
+  text-align: justify;
+}
+.checkbox_user{
+  margin-left: 15%;
+}
+ul, li {
+  margin: 0;
+  padding: 0;
+}
+.login_block{
+  width: 50%;
+}
+.confirm_button{
+  width: 10% !important;
+}
+.margin_bottom {
+  margin-bottom: 25px;
+}
+.margin_top {
+  margin-top: 25px;
+}
+
+.volume_range {
+  width: 120px !important;
+  position: absolute;
+  right: 13%;
+}
+
+.preloader {
+  padding: 50px;
+  background: url('.//Icon_Set/Preloader_3.gif') no-repeat 50% 50% transparent;
+}
+
+.margin_top_h3{
+  margin-top: 20px;
+}
+
+.padding_icon {
+    padding-right: 10px;
+}
+
+.height_row{
+  height: 60px;
+}
+.height_msg{
+  height: 150px !important;
+}

@@ -1,0 +1,16 @@
+{
+  "dev": {
+    "db": {
+      "dbUrl": "mysql://root:@localhost:3306/videoSocial",
+      "password": "ppskrexit",
+      "ssl": false
+    }
+  },
+  "prod": {
+    "db": {
+      "dbUrl": "",
+      "force": false,
+      "ssl": true
+    }
+  }
+}

@@ -1,0 +1,96 @@
+<h3 class="center_text">New Client Regisrtation Page</h3>
+<div class="container-fluid">
+    <div class="registration_form">
+
+        <div class="row registration_blocks">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1">
+                    <label class="col-md-12 title_registration">
+                        <span class="col-md-5 first-elem">First name:</span>
+                        <div class="col-md-7 second-elem">
+                            <input class="input_registration" type="text" name="input" ng-model="newUser.firstName"
+                                   required ng-trim="false" ng-minlength="2" ng-maxlength="100">
+                            <p class="help-block col-md-12 comments">User first name. Must be more 2 characters</p>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="col-md-12 title_registration">
+                        <span class="col-md-5 first-elem">Last name:</span>
+                        <div class="col-md-7 second-elem">
+                            <input class="input_registration" type="text" name="input" ng-model="newUser.lastName"
+                                   required ng-trim="false" ng-minlength="2" ng-maxlength="100">
+                            <p class="help-block col-md-12 comments">User last name. Must be more 2 characters</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <!--<br>-->
+
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1">
+                    <label class="col-md-12 title_registration">
+                        <span class="col-md-5 first-elem">Email:</span>
+                        <div class="col-md-7 second-elem">
+                            <input class="input_registration" type="text" name="input" ng-model="newUser.email"
+                                   required ng-trim="false" ng-minlength="4" ng-maxlength="100">
+                            <p class="help-block col-md-12 comments">User email address</p>
+                        </div>
+                        <span class="warning_text col-md-12 col-md-offset-5 valid_error"
+                              ng-show="error_email">
+                             Email used
+                            </span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1">
+                    <label class="col-md-12 title_registration">
+                        <span class="col-md-5 first-elem">Password:</span>
+                        <div class="col-md-7 second-elem">
+                            <input class="input_registration" type="password" name="password"
+                                   ng-model="newUser.password"
+                                   required ng-trim="false" ng-minlength="4" ng-maxlength="20">
+                            <p class="help-block col-md-12 comments">Must be between 4 and 20 characters</p>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="col-md-12 title_registration">
+                        <span class="col-md-5 first-elem">Confirm password:</span>
+                        <div class="col-md-7 second-elem">
+                            <input class="input_registration" type="password" name="password"
+                                   ng-model="newUser.confirmPassword"
+                                   required ng-trim="false" ng-minlength="4" ng-maxlength="20"
+                                   ng-change="changePassword()">
+                            <p class="help-block col-md-12 comments">Confirm your password</p>
+
+                        </div>
+
+                    </label>
+                    <span class="warning_text col-md-12 col-md-offset-5 valid_error" ng-show="error_confirm_password">
+              Error confirm password
+          </span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="center_text">
+            <div id="checkInfo" ng-show="checkInfo" class="alert alert-danger">
+                <strong>Danger!</strong> Please check information.
+            </div>
+            <button ng-if="newUser.firstName && newUser.lastName  && newUser.email && newUser.password && newUser.confirmPassword"
+                    ng-click="createNewAccount(newUser)">Create Your Account
+            </button>
+            <button class="disabled"
+                    ng-if="!newUser.firstName || !newUser.lastName || !newUser.email || !newUser.password || !newUser.confirmPassword"
+                    ng-click="ok()">Create Your Account
+            </button>
+        </div>
+
+    </div>
+</div>

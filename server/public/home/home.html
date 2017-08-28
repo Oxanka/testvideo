@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <!--<div >-->
+            <h3 class="col-md-4">Hello {{user.firstName}} {{user.lastName}}</h3>
+
+        <!--</div>-->
+        <!--<div class="col-md-2 col-md-offset-4">-->
+        <a class="col-md-7 margin_top_h3 right" ng-click="logOut()">Log Out</a>
+        <!--<a class="col-md-2 col-md-offset-4 margin_top_h3" ng-click="logOut()">LogOut</a>-->
+            <!--<button class="col-md-2 col-md-offset-4 margin_top_h3" ng-click="logOut()">LogOut</button>-->
+        <!--</div>-->
+    </div>
+
+    <h4>Get started with Video social</h4>
+
+
+    <div class="row">
+        <button ng-upload="onUpload($files, choice)" accept="image/*, video/*,  audio/*" ng-click="uploadFile(choice)">Select resume</button>
+
+    </div>
+</div>

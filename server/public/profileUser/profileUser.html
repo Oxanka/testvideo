@@ -1,0 +1,282 @@
+<!--<h3 class="center_text">Settings Account</h3>-->
+<!--<div class="container-fluid">-->
+    <!--<div class="registration_form">-->
+
+        <!--<div class="row registration_blocks">-->
+            <!--<div class="col-md-11">-->
+                <!--<span class="text_registration">User info</span>-->
+                <!--<hr>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row registration_blocks form-horizontal">-->
+            <!--<label class="col-md-4 col-md-offset-1 title_registration">-->
+                <!--<p class="col-md-5 first-elem">Company name:</p>-->
+                <!--<div class="col-md-7 second-elem">-->
+                    <!--<input class="input_registration" type="text" name="input" ng-model="newUser.company"-->
+                           <!--ng-pattern="example.word" required ng-trim="false">-->
+                <!--</div>-->
+            <!--</label>-->
+
+            <!--<label class="col-md-4 title_registration">-->
+                <!--<p class="col-md-5 first-elem">Locale:</p>-->
+                <!--<div class="col-md-7 second-elem">-->
+                    <!--<select class="col-md-6 input_registration" name="repeatSelect" id="lacale"-->
+                            <!--ng-model="newUser.locale">-->
+                        <!--<option ng-repeat="state in lacale" value="{{state.name}}" selected="state[0]">{{state.name}}-->
+                        <!--</option>-->
+                    <!--</select>-->
+                <!--</div>-->
+            <!--</label><br>-->
+        <!--</div>-->
+
+
+        <!--<div class="row registration_blocks">-->
+            <!--<div class="col-md-11">-->
+                <!--<span class="text_registration">Primary Administrator Account</span>-->
+                <!--<hr>-->
+                <!--<span> Create the administrator account which will be primary account</span>-->
+            <!--</div>-->
+        <!--</div>-->
+
+
+        <!--<div class="row registration_blocks">-->
+            <!--<div class="row">-->
+                <!--<div class="col-md-4 col-md-offset-1">-->
+                    <!--<label class="col-md-12 title_registration">-->
+                        <!--<span class="col-md-5 first-elem">First name:</span>-->
+                        <!--<div class="col-md-7 second-elem">-->
+                            <!--<input class="input_registration" type="text" name="input" ng-model="newUser.firstName"-->
+                                   <!--required ng-trim="false">-->
+                            <!--<p class="help-block col-md-12 comments">Primary administrator's first name</p>-->
+                        <!--</div>-->
+                    <!--</label>-->
+                <!--</div>-->
+
+                <!--<div class="col-md-4">-->
+                    <!--<label class="col-md-12 title_registration">-->
+                        <!--<span class="col-md-5 first-elem">Last name:</span>-->
+                        <!--<div class="col-md-7 second-elem">-->
+                            <!--<input class="input_registration" type="text" name="input" ng-model="newUser.lastName"-->
+                                   <!--required ng-trim="false">-->
+                            <!--<p class="help-block col-md-12 comments">Primary administrator's last name</p>-->
+                        <!--</div>-->
+                    <!--</label>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;<br>&ndash;&gt;-->
+
+            <!--<div class="row">-->
+                <!--<div class="col-md-4 col-md-offset-1">-->
+                    <!--<label class="col-md-12 title_registration">-->
+                        <!--<span class="col-md-5 first-elem">Username:</span>-->
+                        <!--<div class="col-md-7 second-elem">-->
+                            <!--<input class="input_registration" type="text" name="input" ng-model="newUser.username"-->
+                                   <!--required ng-trim="false">-->
+                            <!--<p class="help-block col-md-12 comments">Must be between 4 and 25 characters</p>-->
+                        <!--</div>-->
+                    <!--</label>-->
+                <!--</div>-->
+
+                <!--<div class="col-md-4">-->
+                    <!--<label class="col-md-12 title_registration">-->
+                        <!--<span class="col-md-5 first-elem">Email:</span>-->
+                        <!--<div class="col-md-7 second-elem">-->
+                            <!--<input class="input_registration" type="text" name="input" ng-model="newUser.email"-->
+                                   <!--required ng-trim="false" ng-minlength="4" ng-maxlength="100">-->
+                            <!--<p class="help-block col-md-12 comments">Primary administrator's email address</p>-->
+                        <!--</div>-->
+                        <!--<span class="warning_text col-md-12 col-md-offset-5 valid_error"-->
+                              <!--ng-show="error_email">-->
+                             <!--Email used-->
+                            <!--</span>-->
+                    <!--</label>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="row">-->
+                <!--<div class="col-md-4 col-md-offset-1">-->
+                    <!--<label class="col-md-12 title_registration">-->
+                        <!--<span class="col-md-5 first-elem">Password:</span>-->
+                        <!--<div class="col-md-7 second-elem">-->
+                            <!--<input class="input_registration" type="password" name="password"-->
+                                   <!--ng-model="newUser.password"-->
+                                   <!--required ng-trim="false" ng-minlength="4" ng-maxlength="20">-->
+                            <!--<p class="help-block col-md-12 comments">Must be between 4 and 20 characters</p>-->
+                        <!--</div>-->
+                    <!--</label>-->
+                <!--</div>-->
+
+                <!--<div class="col-md-4">-->
+                    <!--<label class="col-md-12 title_registration">-->
+                        <!--<span class="col-md-5 first-elem">Confirm password:</span>-->
+                        <!--<div class="col-md-7 second-elem">-->
+                            <!--<input class="input_registration" type="password" name="password"-->
+                                   <!--ng-model="newUser.confirmPassword"-->
+                                   <!--required ng-trim="false" ng-minlength="4" ng-maxlength="20"-->
+                                   <!--ng-change="changePassword()">-->
+                            <!--<p class="help-block col-md-12 comments">Confirm your password</p>-->
+
+                        <!--</div>-->
+
+                    <!--</label>-->
+                    <!--<span class="warning_text col-md-12 col-md-offset-5 valid_error" ng-show="error_confirm_password">-->
+              <!--Error confirm password-->
+          <!--</span>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="registration_blocks center_text">-->
+            <!--By clicking <b>Create Your Account</b> you agree to the <a>Terms of Service</a> and <a>Private Policy</a>-->
+        <!--</div>-->
+
+
+        <!--<div class="center_text">-->
+            <!--<div id="checkInfo" ng-show="checkInfo" class="alert alert-danger">-->
+                <!--<strong>Danger!</strong> Please check information.-->
+            <!--</div>-->
+            <!--<button ng-if="newUser.company && newUser.locale && newUser.firstName && newUser.lastName && newUser.username && newUser.email && newUser.password && newUser.confirmPassword"-->
+                    <!--ng-click="createNewAccount(newUser)">Create Your Account-->
+            <!--</button>-->
+            <!--<button class="disabled"-->
+                    <!--ng-if="!newUser.company || !newUser.locale || !newUser.firstName || !newUser.lastName || !newUser.username || !newUser.email || !newUser.password || !newUser.confirmPassword"-->
+                    <!--ng-click="ok()">Create Your Account-->
+            <!--</button>-->
+        <!--</div>-->
+
+    <!--</div>-->
+<!--</div>-->
+
+<h3 class="center_text">Settings account user</h3>
+<span class="text_registration">User profile information</span>
+<form class="form-horizontal">
+    <div class="form-group">
+        <label for="firstName" class="col-xs-2 control-label">First Name</label>
+        <div class="col-xs-8">
+            <input type="text" class="form-control" id="firstName" placeholder="First Name" ng-model="userSettings.firstName">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="lastName" class="col-xs-2 control-label">Last Name</label>
+        <div class="col-xs-8">
+            <input type="text" class="form-control" id="lastName" placeholder="Last Name" ng-model="userSettings.lastName">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="lastName" class="col-xs-2 control-label">Email</label>
+        <div class="col-xs-8">
+            <input type="email" class="form-control" id="email" placeholder="Email" ng-model="userSettings.email">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="companyName" class="col-xs-2 control-label">Company Name</label>
+        <div class="col-xs-8">
+            <input type="text" class="form-control" id="companyName" placeholder="Company Name" ng-model="userSettings.company">
+        </div>
+    </div>
+    <!--<div class="form-group">-->
+        <!--<label for="inputPassword" class="col-xs-2 control-label">Password:</label>-->
+        <!--<div class="col-xs-8">-->
+            <!--<input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="userSettings.password">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+        <!--<label for="inputConfirmPassword" class="col-xs-2 control-label">Confirm password:</label>-->
+        <!--<div class="col-xs-8">-->
+            <!--<input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm password" ng-minlength="4" ng-maxlength="20" ng-model="userSettings.confirmPassword" ng-change="changePassword()">-->
+        <!--</div>-->
+        <!--<span class="warning_text col-md-12 col-md-offset-5 valid_error" ng-show="error_confirm_password">-->
+              <!--Error confirm password-->
+          <!--</span>-->
+    <!--</div>-->
+    <div class="form-group">
+        <div class="col-xs-offset-2 col-xs-10">
+            <button type="submit" class="btn btn-default" ng-click="updateUserProfile()">Update</button>
+        </div>
+    </div>
+</form>
+<span class="text_registration">Update password</span>
+<form class="form-horizontal">
+
+    <div class="form-group">
+        <label for="inputPassword" class="col-xs-2 control-label">Password:</label>
+        <div class="col-xs-8">
+            <input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="userPassword.oldPassword">
+        </div>
+    </div>   <div class="form-group">
+        <label for="inputNewPassword" class="col-xs-2 control-label">New password:</label>
+        <div class="col-xs-8">
+            <input type="password" class="form-control" id="inputNewPassword" placeholder="Password" ng-model="userPassword.newPassword">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputConfirmPassword" class="col-xs-2 control-label">Confirm new password:</label>
+        <div class="col-xs-8">
+            <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm password" ng-minlength="4" ng-maxlength="20" ng-model="userPassword.confirmNewPassword" ng-change="changePassword()">
+        </div>
+        <span class="warning_text col-md-12 col-md-offset-5 valid_error" ng-show="error_confirm_password">
+              Error confirm password
+          </span>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-offset-2 col-xs-10">
+            <button type="submit" class="btn btn-default" ng-click="updateUserPassword()" ng-if="userPassword.oldPassword && userPassword.newPassword && userPassword.confirmNewPassword && !error_confirm_password">Update password</button>
+            <button type="submit" class="btn btn-default" ng-click="errorPassword()" ng-if="!userPassword.oldPassword || !userPassword.newPassword || !userPassword.confirmNewPassword || error_confirm_password ">Update password</button>
+            <!--<button type="submit" class="btn btn-default" ng-if="!error_confirm_password">Update password</button>-->
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-offset-2 col-xs-10">
+            <button type="submit" class="btn btn-default" ng-click="homePage()">Back</button>
+        </div>
+    </div>
+</form>
+<!--<div class="container-fluid">-->
+    <!--<div class="row">-->
+        <!--<form class="form-horizontal" role="form">-->
+            <!--<div class="form-body">-->
+                <!--<div class="form-group">-->
+                    <!--<label class="col-xs-2 col-md-offset-2 control-label">First Name</label>-->
+                    <!--<div class="col-xs-4">-->
+                        <!--<input type="text" class="form-control" ng-model="data.name">-->
+                        <!--<div></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<label class="col-xs-2 control-label">Last Name</label>-->
+                    <!--<div class="col-xs-4">-->
+                        <!--<input type="text" class="form-control" ng-model="data.login">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<label class="col-xs-2 control-label">Пароль</label>-->
+                    <!--<div class="col-xs-4">-->
+                        <!--<input type="text" class="form-control" ng-model="data.password">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<label class="col-xs-2 control-label">Подтвердить пароль</label>-->
+                    <!--<div class="col-xs-4">-->
+                        <!--<input type="text" class="form-control" ng-model="data.password">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<label class="col-xs-2 control-label">E-mail</label>-->
+                    <!--<div class="col-xs-4">-->
+                        <!--<input type="text" class="form-control" ng-model="data.email">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<label class="col-xs-2 control-label">Company Name</label>-->
+                    <!--<div class="col-xs-4">-->
+                        <!--<input type="text" class="form-control" ng-model="data.telephone">-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</form>-->
+        <!--<div class="col-md-3"></div>-->
+        <!--<button type="button" class="btn btn-primary" ng-click="userUpdate()">Сохранить</button>-->
+
+    <!--</div>-->
+<!--</div>-->

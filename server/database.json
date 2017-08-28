@@ -1,0 +1,9 @@
+{
+  "migrate": {
+    "driver": "mysql",
+    "user": "root",
+    "password": "123456",
+    "host": "localhost",
+    "database": "selectpop"
+  }
+}
