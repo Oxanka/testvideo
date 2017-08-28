@@ -29,7 +29,6 @@ angular.module('myApp.home', ['ngRoute'])
             var formData = new FormData();
 
             for (var i = 0, n = files.length; i < n; i++) {
-                debugger
                 var arr = files[i].name.split('.');
                 var type = arr[arr.length - 1];
                 var name = arr[0];
