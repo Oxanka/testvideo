@@ -2,21 +2,18 @@
 var Sequelize = require('sequelize'),
     sequelize = require('../config/connection');
 
-var Media = sequelize.define('media', {
+var Comments = sequelize.define('comments', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    filename: Sequelize.STRING,
-    userId: Sequelize.INTEGER,
-    countLike: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
-    }
+    description: Sequelize.TEXT,
+    idMedia: Sequelize.INTEGER,
+    dateComments: Sequelize.STRING
 },{
-    tableName: 'media',
+    tableName: 'comments',
     timestamps: false
 });
 
-module.exports = Media;
+module.exports = Comments;

@@ -4,7 +4,9 @@ var geo = require('geolib');
 var User = require('../models/User');
 var passport = require('passport');
 var FacebookStrategy = require("passport-facebook").Strategy;
+var Comments = require('../models/Comments');
 
+var Media = require("../models/Media");
 var md5 = require('js-md5');
 
 function checkUserInSession(req, res, next) {
@@ -30,13 +32,15 @@ function checkUserInSession(req, res, next) {
         }
     }
 }
+
 function createUser(req, res, next) {
-    var User = require('../models/User');
+
     var user = req.body;
     // var user_company = req.body.company;
     var firstName = req.body.firstName;
     var lastName = req.body.lastName;
-    var username = req.body.username;
+    //TODO генерация username
+    var username = req.body.firstName;
     var email = req.body.email;
 
     req.checkBody('email', 'Invalid email adress').isEmail();
@@ -80,41 +84,6 @@ function createUser(req, res, next) {
         console.log(err);
         return res.status(500).json("Error" + err);
     })
-
-    // User.findOne({
-    //     where: {
-    //         email: user.email
-    //     }
-    // }).then(function (user) {
-    //     if(user) {
-    //         return res.status(201).json("Email used");
-    //     }
-    //     else{
-    //         User.create({
-    //                 firstName: user.firstName,
-    //                 lastName: user.lastName,
-    //                 username: user.username,
-    //                 email: user.email,
-    //                 companyName: user.company,
-    //                 localeCompany: user.locale,
-    //                 password: token,
-    //                 id_role: 1
-    //             })
-    //             .then(function (users) {
-    //                 req.session.token = token;
-    //                 console.log(users);
-    //                 return res.status(200).json(users);
-    //             }, function (err) {
-    //                 console.log(err);
-    //                 return res.status(500).json("Error" + err);
-    //             });
-    //     }
-    // }, function (err) {
-    //     console.log(err);
-    //     return res.status(500).json("Error" + err);
-    // })
-    //
-
 }
 
 function loginUser(req, res, next) {
@@ -154,17 +123,7 @@ function loginUser(req, res, next) {
                         else {
                             console.log(login_user.toJSON());
                             req.session.token = login_user.password;
-                            Role.findOne({
-                                where: {
-                                    id: login_user.id_role
-                                }
-                            })
-                                .then(function (role) {
-                                    return res.status(200).send({user: login_user, token: user_token, role: role.name})
-                                }, function (err) {
-                                    console.log(err); // Error: "Ошибка!"
-                                    return res.status(500).json("Error" + err);
-                                });
+                            return res.status(200).send({user: login_user, token: user_token})
                         }
                     }, function (err) {
                         console.log(err);
@@ -186,7 +145,7 @@ function getUserInfo(req, res, next) {
 
     var user_email = req.body.email;
     User.findOne({
-        where:{
+        where: {
             email: user_email
         }
 
@@ -194,43 +153,164 @@ function getUserInfo(req, res, next) {
         return res.status(200).json(user)
     }, function (err) {
         console.log(err); // Error: "Ошибка!"
+        return res.status(500).json("Error" + err);
     })
 }
 
-// function facebook() {
-    //facebook
-    passport.use(new FacebookStrategy({
-            clientID: config.FACEBOOK_APP_ID,
-            clientSecret: config.FACEBOOK_APP_SECRET,
-            callbackURL: "http://localhost:3000/auth/facebook/callback",
-            profileFields: ['id', 'displayName', 'photos', 'email']
-        },
-        function (token, tokenSecret, profile, done) {
-            process.nextTick(function () {
-                //Check whether the User exists or not using profile.id
-                if (config.use_database === 'true') {
-                    connection.query("SELECT * from user where user_id=" + profile.id, function (err, rows, fields) {
-                        if (err) throw err;
-                        if (rows.length === 0) {
-                            console.log("There is no such user, adding now");
-                            connection.query("INSERT into user(user_id,user_name,email,provider) VALUES('" + profile.id + "','" + profile.displayName + "','" + profile.emails[0].value + "','" + profile.provider + "')");
-                        }
-                        else {
-                            console.log("User already exists in database");
-                        }
-                    });
-                }
-                //console.log(profile.emails[0].value);
-                console.log(profile);
-                console.log(token);
-                return done(null, profile);
+function getUserMedia(req, res, next) {
+    var userId = req.header("token");
 
-            });
+
+    User.findOne({
+        where: {
+            password: userId
         }
-    ));
-// }
+    }).then(function (user) {
 
+        Media.hasMany(Comments, {foreignKey: 'idMedia', sourceKey: 'id'});
+
+        var querySettings = {
+            include: [
+                {
+                    model: Comments
+                }
+            ],
+            where: {
+                userId: user.id
+            }
+        };
+        Media.findAll(querySettings).then(function (info) {
+            console.log(info);
+            res.status(200).json(info);
+        });
+        //Media.belongsTo(Comments, {foreignKey: 'id',targetKey: 'idMedia'});
+        // Media.hasMany(Comments, {foreignKey: 'id' ,targetKey: 'idMedia'});
+        // var querySettings = {
+        //     include: [
+        //         {
+        //             model: Comments
+        //         }
+        //     ],
+        //     where: {
+        //         userId: user.id
+        //     }
+        // };
+        // Media.findAll(querySettings).then(function (info) {
+        //     console.log(info);
+        //     res.status(200).json(info);
+        // });
+        // Media.belongsTo(Comments, {foreignKey: 'id'})
+        // Media.hasMany(Comments, {as: 'Workers', foreignKey: 'idMedia', sourceKey: 'id'});
+        // var querySettings = {
+        //     include: [
+        //         {
+        //             model: Comments
+        //         }
+        //     ],
+        //     where: {
+        //         userId: user.id
+        //     }
+        // };
+        // Media.findAll(querySettings).then(function (info) {
+        //     console.log(info);
+        //     res.status(200).json(info);
+        // });
+
+
+
+        // Media.findAll({
+        //     where: {
+        //         userId: user.id
+        //     }
+        // }).then(function (media) {
+        //     // console.log(media);
+        //
+        //     return res.status(200).json(media)
+        // }, function (err) {
+        //     console.log(err); // Error: "Ошибка!"
+        //     return res.status(500).json("Error" + err);
+        // })
+
+    }, function (err) {
+        console.log(err); // Error: "Ошибка!"
+        return res.status(500).json("Error" + err);
+    })
+}
+
+
+function getAllMedia(req, res, next) {
+
+
+        Media.hasMany(Comments, {foreignKey: 'idMedia', sourceKey: 'id'});
+    Media.belongsTo(User, {foreignKey: 'userId'});
+        var querySettings = {
+            include: [
+                {
+                    model: Comments
+                },
+                {
+                    model: User,
+                    attributes: { exclude: ['email', 'id', 'password', 'facebookId', 'status'] }
+                }
+            ]
+        };
+        Media.findAll(querySettings).then(function (info) {
+            console.log(info);
+            res.status(200).json(info);
+        });
+}
+
+function registrationWithFacebook(req, user) {
+    var userName = user.displayName.split(' ');
+    var firstName = userName[0];
+    var lastName =userName[1];
+    var username  =user.displayName;
+    var email = user.emails[0].value;
+    var password = "qwertyuiop";
+    var facebookId = user.id;
+    var token = md5.hex(password);
+
+    User.findOne({
+        where: {
+            email: email,
+            facebookId: facebookId
+        }
+    }).then(function (user) {
+        if (user) {
+            return "Email used";
+        }
+        else {
+            User.create({
+                firstName: firstName,
+                lastName: lastName,
+                username: username,
+                email: email,
+                password: token,
+                facebookId: facebookId
+            })
+                .then(function (users) {
+                    req.session.token = token;
+                    console.log(users);
+                    return token;
+                }, function (err) {
+                    console.log(err);
+                    return "Error create user";
+                });
+        }
+    }, function (err) {
+        console.log(err);
+        return "Error login";
+    })
+}
+
+function getUserLoginFb(req, res, next) {
+    console.log(passport.session());
+}
 module.exports.checkUserInSession = checkUserInSession;
 module.exports.createUser = createUser;
 module.exports.loginUser = loginUser;
 module.exports.getUserInfo = getUserInfo;
+module.exports.getUserMedia = getUserMedia;
+module.exports.getAllMedia = getAllMedia;
+module.exports.registrationWithFacebook = registrationWithFacebook;
+module.exports.getUserLoginFb = getUserLoginFb;

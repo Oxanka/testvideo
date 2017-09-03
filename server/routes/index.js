@@ -3,6 +3,7 @@
 var express = require('express');
 
 var user = require('./api/user');
+var media = require('./api/media');
 
 var router = express.Router();
 
@@ -42,9 +43,9 @@ module.exports.init = function (app) {
      */
     router.use(function (req, res, next) {
         if (env === "dev" || env === "test") {
-            console.log("|| REQ QUERY ||\n " + JSON.stringify(req.query));
-            console.log("|| REQ BODY ||\n " + JSON.stringify(req.query));
-            console.log("|| REQ PATH VARIABLES ||\n " + JSON.stringify(req.query));
+            // console.log("|| REQ QUERY ||\n " + JSON.stringify(req.query));
+            // console.log("|| REQ BODY ||\n " + JSON.stringify(req.query));
+            // console.log("|| REQ PATH VARIABLES ||\n " + JSON.stringify(req.query));
         }
         next();
     });
@@ -56,9 +57,6 @@ module.exports.init = function (app) {
         var token = req.header('token');
         if(token != undefined){
             if (token === req.session.token) {
-                req.body.info = {
-                    name: 'test'
-                }
                 next();
             } else {
                 return res.status(500).json("Auth Error");
@@ -75,10 +73,12 @@ module.exports.init = function (app) {
      * Define Api
      */
     router.use('/auth', user);
-    router.use('/user', user);
-    router.use('/user_new', user);
-    router.use('/users', user);
-    router.use('/file', user);
+    router.use('/user', isAuth, user);
+    router.use('/file', isAuth, user);
+    router.use('/media', isAuth, media);
+    // router.use('/user', user);
+    // router.use('/file',  user);
+    // router.use('/media', media);
 
     app.use("/", router);
 

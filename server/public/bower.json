@@ -16,6 +16,8 @@
     "international-phone-number": "^0.0.16",
     "underscore": "^1.8.3",
     "angular-trix": "^1.0.2",
-    "angular-spinners": "^5.0.4"
+    "angular-spinners": "^5.0.4",
+    "socket.io": "^2.0.3",
+    "socket.io-client": "^2.0.3"
   }
 }

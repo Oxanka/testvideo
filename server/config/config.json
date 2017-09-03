@@ -1,8 +1,13 @@
 {
   "dev": {
+    "password": "root",
+    "username": "root",
+    "database": "videoSocial",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
     "db": {
       "dbUrl": "mysql://root:@localhost:3306/videoSocial",
-      "password": "ppskrexit",
+      "password": "root",
       "ssl": false
     }
   },

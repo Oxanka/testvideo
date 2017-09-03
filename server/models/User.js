@@ -13,6 +13,7 @@ var User = sequelize.define('user', {
     username: Sequelize.STRING,
     email: Sequelize.STRING,
     password: Sequelize.STRING,
+    facebookId: Sequelize.STRING,
     status: {
         type: Sequelize.INTEGER,
         defaultValue: 1

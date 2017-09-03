@@ -8,132 +8,100 @@ var Sequelize = require("sequelize");
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var Strategy = require('passport-facebook').Strategy;
 var busboy = require('connect-busboy');
 var expressValidator = require('express-validator');
 var expressSession =  require('express-session');
+var cookieParser = require('cookie-parser');
 var UserController = require('./controllers/UserController');
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+var User = require('./models/User');
+var md5 = require('js-md5');
 
 
-server.listen(4200);
 // app.use(redirectToHTTPS(['localhost:3001']));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, 'userfile')));
 app.use(express.static(path.join(__dirname, 'resume')));
 
 app.use(busboy());
+app.use(expressValidator());
+app.use(cookieParser());
+app.use(expressSession({ secret: 'video_test', resave: true, saveUninitialized: true }));
 
-io.on('connection', function(client) {
-    console.log('Client connected...');
+var info;
+passport.use(new Strategy({
+        clientID: "1131754793538579",
+        clientSecret: "650749fcaaa3051166d8567d77e103e5",
+        callbackURL: 'http://localhost:3001/login/facebook/return',
+        profileFields: ['id', 'displayName', 'photos', 'email']
+    },
+    function(req, accessToken, refreshToken, profile, cb) {
 
-    client.on('join', function(data) {
-        console.log(data);
-    });
-    client.on('start_stream', function(data) {
-        console.log(data);
-    });
-    client.on('stop_stream', function(data) {
-        client.emit('disconnect_stream','Stop stream');
-        console.log(data);
-    });
-    client.on('disconnect', function () {
-        console.log("disconnect");
-    });
+        console.log(profile);
+        info = profile;
+        var loginResult = UserController.registrationWithFacebook(req, profile);
+        return cb(null, profile);
 
+    }));
+
+
+// Configure Passport authenticated session persistence.
+//
+// In order to restore authentication state across HTTP requests, Passport needs
+// to serialize users into and deserialize users out of the session.  In a
+// production-quality application, this would typically be as simple as
+// supplying the user ID when serializing, and querying the user record by ID
+// from the database when deserializing.  However, due to the fact that this
+// example does not have a database, the complete Facebook profile is serialized
+// and deserialized.
+
+passport.serializeUser( function(user, done) {
+    var sessionUser = { _id: user.id, name: user.displayName, email: user.emails[0].value}
+    done(null, sessionUser)
 });
-// var BinaryServer = require('binaryjs').BinaryServer;
-// var fs = require('fs');
-// var wav = require('wav');
-// binaryServer = BinaryServer({port: 3000});
-// binaryServer.on('connection', function(client) {
-//     console.log('new connection');
-//
-//     var fileWriter = new wav.FileWriter(outFile, {
-//         channels: 1,
-//         sampleRate: 48000,
-//         bitDepth: 16
-//     });
-//
-//     client.on('stream', function(stream, meta) {
-//         console.log('new stream');
-//         stream.pipe(fileWriter);
-//
-//         stream.on('end', function() {
-//             fileWriter.end();
-//             console.log('wrote to file ' + outFile);
-//         });
-//     });
+
+passport.deserializeUser( function(sessionUser, done) {
+    // The sessionUser object is different from the user mongoose collection
+    // it's actually req.session.passport.user and comes from the session collection
+    done(null, sessionUser)
+});
+
+// passport.serializeUser(function(user, cb) {
+//     cb(null, user);
 // });
+//
+// passport.deserializeUser(function(obj, cb) {
+//     // User.findById(obj, function(err, user) {
+//     //     cb(err, user);
+//     // });
+//     cb(null, obj);
+// });
+
+// Initialize Passport and restore authentication state, if any, from the
+// session.
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('/login/facebook',
+    // function authenticateFacebook (req, res, next) {
+    //     console.log(req);
+    // },
+    passport.authenticate('facebook',  {scope:
+        ['email', 'user_about_me']
+    }));
+app.get('/login/facebook/return',
+    passport.authenticate('facebook', {successRedirect: '/#!/home',  failureRedirect: '/' }
+    ));
 
 var routers = require('./routes');
 
 var port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
 
-// app.enable('trust proxy');
-// app.use(function (req, res, next) {
-//     if (req.secure) {
-//         // request was via https, so do no special handling
-//         next();
-//     } else {
-//         // request was via http, so redirect to https
-//         res.redirect('https://' + req.headers.host + req.url);
-//     }
-// });
 
-// app.all('/*', function(req, res, next) {
-//     if (/^http$/.test(req.protocol)) {
-//         var host = req.headers.host.replace(/:[0-9]+$/g, ""); // strip the port # if any
-//         if ((HTTPS_PORT != null) && HTTPS_PORT !== 443) {
-//             return res.redirect("https://" + host + ":" + HTTPS_PORT + req.url, 301);
-//         } else {
-//             return res.redirect("https://" + host + req.url, 301);
-//         }
-//     } else {
-//         return next();
-//     }
-// });
-
-// function ensureSecure(req, res, next){
-//     if(req.secure){
-//         return next();
-//     };
-//     res.redirect('https://'+req.host+':' + 8000 + req.url);
-// };
-//
-// app.all('*', ensureSecure);
-
-// function requireHTTPS(req, res, next) {
-//     if (!req.secure) {
-//         return res.redirect('https://' + req.get('host') + req.url);
-//     }
-//     next();
-// }
-//
-// app.use(requireHTTPS);
-
-// app.get("*", function (req, res, next) {
-//     res.redirect("https://" + req.headers.host + "/" + req.path);
-// });
-// app.use(function (req, res, next) {
-//     var schema = (req.headers['x-forwarded-proto'] || '').toLowerCase();
-//     if (schema === 'https') {
-//         next();
-//     } else {
-//         res.redirect('https://' + req.headers.host + req.url);
-//     }
-// });
 app.use(bodyParser.json({limit: '150mb'}));
 app.use(bodyParser.urlencoded({limit: '150mb', extended: false}));
-
-app.use(expressValidator());
-app.use(expressSession({ secret: 'select_pop', resave: true, saveUninitialized: true }));
-
-// app.get("*", function (req, res, next) {
-//     res.redirect("https://" + req.headers.host + "/" + req.path);
-// });
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

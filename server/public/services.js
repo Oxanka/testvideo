@@ -13,19 +13,11 @@ angular.module('myApp.services', [])
             return JSON.parse(window.localStorage.login_user || '{}');
         };
 
-        var getUser = function () {
-
-            return $http({
-                method: "get",
-                url: API + "/users/find"
-            }).then(function (user) {
-            })
-        }
         var newUser = function (user) {
 
             return $http({
                 method: "post",
-                url: API + "/user/create",
+                url: API + "/auth/create",
                 data: user
             }).then(function (user) {
                 usertoken.user_tocken = user.data.password;
@@ -67,11 +59,13 @@ angular.module('myApp.services', [])
             })
         };
         var getLoginUserInfo = function(user_email){
-
             var data = {
                 email: user_email
-            }
+            };
             return $http({
+                headers: {
+                    token: userinfo.userinfo.password
+                },
                 method: "post",
                 url: API + "/user/getuserinfoprofile",
                 data: data
@@ -85,13 +79,118 @@ angular.module('myApp.services', [])
             })
         };
 
+        var getUserMedia = function () {
+            return $http({
+                headers: {
+                    token: userinfo.userinfo.password
+                },
+                method: "get",
+                url: API + "/file/getmedia"
+            }).then(function (media) {
+                console.log(media.data);
+                $rootScope.$emit("get_media", media.data);
+            })
+        };
+        var allMedia = function () {
+            return $http({
+                headers: {
+                    token: userinfo.userinfo.password
+                },
+                method: "get",
+                url: API + "/file/getallmedia"
+            }).then(function (media) {
+                console.log(media.data);
+                $rootScope.$emit("get_media", media.data);
+            })
+        };
+
         return {
             setUser: setUser,
             getUserInfo: getUserInfo,
-            getUser: getUser,
             newUser: newUser,
             loginUser: loginUser,
-            getLoginUserInfo: getLoginUserInfo
+            getLoginUserInfo: getLoginUserInfo,
+            getUserMedia: getUserMedia,
+            allMedia: allMedia,
+        };
+    })
+
+    .service('Media', function ($http, $rootScope, API, User, usertoken, userinfo) {
+        var incrementLike = function (info) {
+            var data = {
+                id: info.id
+            }
+            return $http({
+                headers: {
+                    token: userinfo.userinfo.password
+                },
+                method: "post",
+                url: API + "/media/increment",
+                data: data
+            }).then(function (media) {
+                console.log(media.data);
+                if(info.state === "user"){
+                    User.getUserMedia()
+                }
+                else if( info.state === "all"){
+                    User.allMedia();
+                }
+                // User.getUserMedia()
+                // $rootScope.$emit("get_media", media.data);
+            })
+        };
+        var decrementLike = function (info) {
+            var data = {
+                id: info.id
+            }
+            return $http({
+                headers: {
+                    token: userinfo.userinfo.password
+                },
+                method: "post",
+                url: API + "/media/decrement",
+                data: data
+            }).then(function (media) {
+                console.log(media.data);
+                if(info.state === "user"){
+                    User.getUserMedia()
+                }
+                else if( info.state === "all"){
+                    User.allMedia();
+                }
+                // User.getUserMedia()
+                // $rootScope.$emit("get_media", media.data);
+            })
+        };
+        var addComments = function (info) {
+            var data = {
+                idMedia: info.id,
+                description: info.description
+            };
+            return $http({
+                headers: {
+                    token: userinfo.userinfo.password
+                },
+                method: "post",
+                url: API + "/media/createcomments",
+                data: data
+            }).then(function (media) {
+                console.log(media.data);
+                if(info.state === "user"){
+                    User.getUserMedia()
+                }
+                else if( info.state === "all"){
+                    User.allMedia();
+                }
+
+                // $rootScope.$emit("get_media", media.data);
+            })
+        };
+        return {
+            incrementLike: incrementLike,
+            decrementLike: decrementLike,
+            addComments: addComments
+
         };
     })
     .service('usertoken', function () {
